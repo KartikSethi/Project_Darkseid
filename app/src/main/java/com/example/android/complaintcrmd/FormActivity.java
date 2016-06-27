@@ -8,8 +8,10 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -20,18 +22,28 @@ public class FormActivity extends AppCompatActivity implements
 
     private String[] arraySpinner1;
     Spinner spinner1, spinner2;
+    private Button submit, cancel;
     private String[] arraySpinner2;
     CoordinatorLayout coordinatorLayout;
-    EditText comment;
-
+    private EditText comment;
+    public static TextView stationFill, timeFill, dateFill;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_form);
+
         coordinatorLayout = (CoordinatorLayout) findViewById(R.id.coordinatorLayout);
         comment = (EditText) findViewById(R.id.comment_box);
+        submit = (Button) findViewById(R.id.submit_button);
+        cancel = (Button) findViewById(R.id.cancel_button);
         spinner1 = (Spinner) findViewById(R.id.spinner1);
         spinner2 = (Spinner) findViewById(R.id.spinner2);
+
+        stationFill = (TextView) findViewById(R.id.station_fill);
+        timeFill = (TextView) findViewById(R.id.time_fill);
+        dateFill = (TextView) findViewById(R.id.date_fill);
+
+
 
         this.arraySpinner1 = new String[]{
                 "None", "Telecom", "Automatic Fare Collection (AFC)"
@@ -41,6 +53,32 @@ public class FormActivity extends AppCompatActivity implements
                 android.R.layout.simple_spinner_item, arraySpinner1);
         spinner1.setAdapter(adapter_spinner1);
         spinner1.setOnItemSelectedListener(this);
+
+        BackgroundTask backgroundTask = new BackgroundTask(FormActivity.this);
+        backgroundTask.execute("form_retrieval");
+
+        submit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+
+                    BackgroundTask backgroundTask = new BackgroundTask(FormActivity.this);
+                    backgroundTask.execute("form_output",spinner1.getSelectedItem().toString(),spinner2.getSelectedItem().toString(),comment.getText().toString());
+
+                }
+
+
+        });
+
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finishActivity(FormActivity);
+            }
+
+
+        });
+
 
     }
 

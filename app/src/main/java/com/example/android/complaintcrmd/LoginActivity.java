@@ -1,11 +1,13 @@
 package com.example.android.complaintcrmd;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 import android.view.MenuItem;
 import android.view.View;
@@ -39,7 +41,7 @@ public class LoginActivity extends AppCompatActivity {
         signup_text.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(LoginActivity.this, ScrollingActivity.class));
+                startActivity(new Intent(LoginActivity.this, RegisterActivity.class));
             }
         });
 
@@ -64,7 +66,46 @@ public class LoginActivity extends AppCompatActivity {
             Pass.setText(loginPreferences.getString("password", ""));
             saveLoginCheckBox.setChecked(true);
         }
-    }
+
+            login_button.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (Username.getText().toString().equals("") || Pass.getText().toString().equals("")) {
+                        builder = new AlertDialog.Builder(LoginActivity.this);
+                        builder.setTitle("Something went wrong");
+                        builder.setMessage("Please fill both the fields");
+                        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                dialogInterface.dismiss();
+                            }
+                        });
+                        AlertDialog alertDialog = builder.create();
+                        alertDialog.show();
+                    } else {
+                        BackgroundTask backgroundTask = new BackgroundTask(LoginActivity.this);
+                        TelephonyManager tm = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
+                        imei = tm.getDeviceId();
+                    /*
+                     * AsyncTask has the form AsyncTask<Param, Progress, Return> with execute using the Param type.
+                     * so here we are sending the @Params to the Background task with all the parameters as strings
+                     */
+
+                        backgroundTask.execute("login", Username.getText().toString(), Pass.getText().toString(), imei);
+                    /*
+                     * here login is arg[0], Username.getText().toString() is arg[1] and so on.
+                     */
+
+                    }
+
+                }
+            });
+
+
+            final AlertDialog.Builder builder =
+                    new AlertDialog.Builder(this);
+        }
+
 
 //    public void onClick(View view) {
 //        if (view == login_button) {
