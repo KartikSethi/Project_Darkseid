@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/report_a_complaint"
+            android:icon="@drawable/ic_check_black_24dp"
+            android:title="Report A Complaint"/>
+        <item
+            android:id="@+id/pending_tasks"
+            android:icon="@drawable/ic_person_outline_black_24dp"
+            android:title="Pending Tasks" />.
+
+    </group>
+
+    <item android:title="Communicate">
+        <menu>
+            <item
+                android:id="@+id/nav_share"
+                android:icon="@drawable/ic_menu_share"
+                android:title="Share" />
+            <item
+                android:id="@+id/nav_send"
+                android:icon="@drawable/ic_menu_send"
+                android:title="Send" />
+        </menu>
+    </item>
+
+</menu>
