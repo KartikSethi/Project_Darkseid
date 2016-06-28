@@ -14,6 +14,20 @@
     <string name="error_invalid_password">This password is too short</string>
     <string name="error_incorrect_password">This password is incorrect</string>
     <string name="error_field_required">This field is required</string>
+    <string name="prompt_username">Username</string>
+    <string name="error_report">Lodge Error Report</string>
+    <string name="prompt_con_password">Confirm Password</string>
+    <string name="station">Station</string>
+    <string name="time">Time</string>
+    <string name="login_button">Login</string>
+    <string name="sign_up_text">New user? Sign up</string>
+    <string name="user_reg">User Registration</string>
+    <string name="emp_name">Name</string>
+    <string name="emp_username">Username</string>
+    <string name="register_button">Register</string>
+    <string name="no_geocoder_available">No geocoder available</string>
+    <string name="report_text">Your Report</string>
+    <string name="text_input">Add text here</string>
     <string name="permission_rationale">"Contacts permissions are needed for providing email
         completions."
     </string>
@@ -113,4 +127,14 @@
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="title_activity_drawer__activity__station">Drawer_Activity_Station</string>
+    <string name="date">Date</string>
+    <string name="fault_type">Fault Type:</string>
+    <string name="error_type_prompt">Choose a type</string>
+    <string name="comments">Comments:</string>
+    <string name="type_here">Type here</string>
+    <string name="cancel_button">Cancel</string>
+    <string name="submit_button">Submit</string>
+
+    <string name="sub_fault_type">Fault Sub-Type:</string>
+    <string name="remember">Save Credentials?</string>
 </resources>
