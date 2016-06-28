@@ -13,8 +13,6 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import com.example.android.complaintcrmd.data.DBHelper;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,76 +24,80 @@ public class PendingFragment extends Fragment {
 
     ArrayAdapter<String> pendingAdapter;
     DBHelper db;
-
+    ListView listView;
     public PendingFragment() {
         // Required empty public constructor
     }
 
     public void updateList(){
-//////////////////////////////////////////////////////////////////////////////
-//        FetchListTask task=new FetchListTask();
-//        task.execute();
-        Toast.makeText(getActivity(),"Updating List",Toast.LENGTH_SHORT).show();
+
+        //TODO: update fetchinfo from database and update the list adapter
+        //TODO: update fetch
+        List<String> complaintList= getTableRows();
+        pendingAdapter= new ArrayAdapter<String>(getActivity(),R.layout.list_view_item,R.id.textView,complaintList);
+
+        listView.setAdapter(pendingAdapter);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+                //Toast.makeText(getActivity(),"Entry number"+position,Toast.LENGTH_SHORT).show();
+                String str=getListItem(position);
+                Intent intent=new Intent(getActivity(),DetailActivity2.class).putExtra("details",str);
+                intent.putExtra("position",position);
+                startActivity(intent);
+
+            }
+        });
+
 
     }
     public void onStart(){
         super.onStart();
         updateList();
-
+        Toast.makeText(getActivity(), "Pending Work", Toast.LENGTH_SHORT).show();
     }
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
 
-        String[] complaints= {
-                "Complaint1",
-                "complaint2",
-                "Complaint3",
-                "Complaint4"
-        };
+
+        //TODO Background activity start!!
+        DBHelper db;
         db = new DBHelper(this.getContext());
-        // Inflate the layout for this fragment
+        db.insertPending("abc");
+        db.insertPending("degghijkl");
+        db.insertPending("zcvzv");
 
-         db.insertPending("Cm1");
-
-        Cursor cr = db.getListPending();
-
-        List<String> complaintList= getTableRows(cr);
-        //List<String> complaintList=new ArrayList<String>(Arrays.asList(complaints));
-        pendingAdapter= new ArrayAdapter<String>(getActivity(),R.layout.list_view_item,R.id.textView,complaintList);
-
+        Toast.makeText(getActivity(),"Updating List",Toast.LENGTH_SHORT).show();
         View rootView=inflater.inflate(R.layout.fragment_pending, container, false);
+        listView = (ListView) rootView.findViewById(R.id.pendingList);
 
-
-
-        ListView listView = (ListView) rootView.findViewById(R.id.pendingList);
-        listView.setAdapter(pendingAdapter);
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-                Toast.makeText(getActivity(),"Entry number"+position,Toast.LENGTH_SHORT).show();
-                Intent intent=new Intent(getActivity(),DetailsActivity.class).putExtra("details","bla bla bla");
-                startActivity(intent);
-            }
-        });
         return rootView;
     }
-    public List<String> getTableRows(Cursor cursor) {
-        List<String> result = new ArrayList<String>();
 
+    public List<String> getTableRows() {
+        List<String> result = new ArrayList<String>();
+        DBHelper db;
+        db = new DBHelper(this.getContext());
+        Cursor cursor = db.getListPending();
         //   cursor.moveToFirst();
         while (cursor.moveToNext()) {
             String columnValue = cursor.getString(0);
             result.add(columnValue);
-
         }
-
-
         cursor.close();
         return result;
+    }
+    public String getListItem(int position){
+
+        DBHelper db;
+        db = new DBHelper(this.getContext());
+        Cursor cursor = db.getListPending();
+        cursor.moveToPosition(position);
+        return cursor.getString(0);
+
     }
 
 
