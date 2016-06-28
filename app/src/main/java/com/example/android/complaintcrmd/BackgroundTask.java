@@ -382,9 +382,9 @@ public class BackgroundTask extends AsyncTask<String, Void, String> {
                 } else if (code.equals("form_retrieval_true")) {
                     progressDialog.dismiss();
                     // write the code for extracting each of the three items
-                    FormActivity.stationFill.setText(enter the messages or the values);
-                    FormActivity.timeFill.setText(enter the messages or the values);
-                    FormActivity.dateFill.setText(enter the messages or the values);
+//                    FormActivity.stationFill.setText(enter the messages or the values);
+//                    FormActivity.timeFill.setText(enter the messages or the values);
+//                    FormActivity.dateFill.setText(enter the messages or the values);
                 } else if (code.equals("form_output_true")) {
                     showDialog("Complaint Reported", message, code);
                     progressDialog.dismiss();

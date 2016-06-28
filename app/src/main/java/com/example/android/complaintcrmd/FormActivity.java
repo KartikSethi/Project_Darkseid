@@ -73,7 +73,7 @@ public class FormActivity extends AppCompatActivity implements
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                finishActivity(FormActivity);
+                FormActivity.this.finish();
             }
 
 
