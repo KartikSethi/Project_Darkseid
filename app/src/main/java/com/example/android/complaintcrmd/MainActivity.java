@@ -83,7 +83,7 @@ public class MainActivity extends AppCompatActivity
         FragmentManager manager=getSupportFragmentManager();
 
         if (id == R.id.pending_tasks) {
-            Toast.makeText(this,"Pending Work",Toast.LENGTH_SHORT).show();
+
             pendingFragment= new PendingFragment();
            manager.beginTransaction().replace(R.id.FragmentHolder, pendingFragment).commit();
 
