@@ -1,5 +1,5 @@
 package com.example.android.complaintcrmd;
-
+//import com.example.android.complaintcrmd.data.DBHelper;
 
 import android.content.Intent;
 import android.database.Cursor;
@@ -13,7 +13,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import com.example.android.complaintcrmd.data.DBHelper;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,8 +25,8 @@ import java.util.List;
 public class PendingFragment extends Fragment {
 
     ArrayAdapter<String> pendingAdapter;
-    DBHelper db;
 
+    //    DBHelper db;
     public PendingFragment() {
         // Required empty public constructor
     }
@@ -56,16 +56,16 @@ public class PendingFragment extends Fragment {
                 "Complaint3",
                 "Complaint4"
         };
-        db = new DBHelper(this.getContext());
+//        db = new DBHelper(this.getContext());
         // Inflate the layout for this fragment
 
-         db.insertPending("Cm1");
+//         db.insertPending("Cm1");
 
-        Cursor cr = db.getListPending();
+//        Cursor cr = db.getListPending();
 
-        List<String> complaintList= getTableRows(cr);
+//        List<String> complaintList= getTableRows(cr);
         //List<String> complaintList=new ArrayList<String>(Arrays.asList(complaints));
-        pendingAdapter= new ArrayAdapter<String>(getActivity(),R.layout.list_view_item,R.id.textView,complaintList);
+//        pendingAdapter= new ArrayAdapter<String>(getActivity(),R.layout.list_view_item,R.id.textView,complaintList);
 
         View rootView=inflater.inflate(R.layout.fragment_pending, container, false);
 

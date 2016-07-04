@@ -27,6 +27,7 @@ public class FormActivity extends AppCompatActivity implements
     CoordinatorLayout coordinatorLayout;
     private EditText comment;
     public static TextView stationFill, timeFill, dateFill;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,7 +43,6 @@ public class FormActivity extends AppCompatActivity implements
         stationFill = (TextView) findViewById(R.id.station_fill);
         timeFill = (TextView) findViewById(R.id.time_fill);
         dateFill = (TextView) findViewById(R.id.date_fill);
-
 
 
         this.arraySpinner1 = new String[]{
@@ -61,11 +61,13 @@ public class FormActivity extends AppCompatActivity implements
             @Override
             public void onClick(View view) {
 
+                Log.v("checking", spinner1.getSelectedItem().toString());
+                Log.v("checking", spinner2.getSelectedItem().toString());
+                BackgroundTask backgroundTask = new BackgroundTask(FormActivity.this);
+                backgroundTask.execute("form_output", spinner1.getSelectedItem().toString(), spinner2.getSelectedItem().toString(), comment.getText().toString());
 
-                    BackgroundTask backgroundTask = new BackgroundTask(FormActivity.this);
-                    backgroundTask.execute("form_output",spinner1.getSelectedItem().toString(),spinner2.getSelectedItem().toString(),comment.getText().toString());
 
-                }
+            }
 
 
         });

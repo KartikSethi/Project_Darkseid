@@ -1,135 +1,172 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorPrimary"
-    android:orientation="vertical"
-    tools:context="com.example.android.splash.RegisterActivity">
+    android:fillViewport="true">
 
-    <TextView
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
-        android:fontFamily="sans-serif-light"
-        android:gravity="center"
-        android:text="@string/user_reg"
-        android:textAllCaps="true"
-        android:textColor="@color/textColor"
-        android:textSize="30sp"
-        android:textStyle="bold" />
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="25dp"
-        android:layout_marginRight="25dp"
-        android:layout_marginTop="50dp">
+        android:layout_height="match_parent"
+        android:background="@color/colorPrimary"
+        android:orientation="vertical"
+        tools:context="com.example.android.complaintcrmd.RegisterActivity">
 
         <TextView
-            android:id="@+id/txtview1_reg"
+            android:id="@+id/register_header"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:text="@string/emp_name"
+            android:layout_marginTop="30dp"
+            android:fontFamily="sans-serif-light"
+            android:gravity="center"
+            android:text="@string/user_reg"
+            android:textAllCaps="true"
             android:textColor="@color/textColor"
-            android:textSize="24sp"
-            android:fontFamily="sans-serif-condensed"
+            android:textSize="30sp"
             android:textStyle="bold" />
 
-        <EditText
-            android:id="@+id/name_reg"
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/txtview1_reg"
-            android:inputType="textAutoComplete"
-            android:maxLines="1"
-            android:singleLine="true"
-            android:textColor="@color/textColor"
-            android:textStyle="bold" />
+            android:layout_marginLeft="25dp"
+            android:layout_marginRight="25dp"
+            android:layout_marginTop="50dp">
 
-        <TextView
-            android:id="@+id/txtview2_reg"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_below="@id/name_reg"
-            android:text="@string/emp_username"
-            android:textColor="@color/textColor"
-            android:textSize="24sp"
-            android:fontFamily="sans-serif-condensed"
-            android:textStyle="bold" />
+            <TextView
+                android:id="@+id/txtview1_reg"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:fontFamily="sans-serif-condensed"
+                android:text="@string/emp_name"
+                android:textColor="@color/textColor"
+                android:textSize="24sp"
+                android:textStyle="bold" />
 
-        <EditText
-            android:id="@+id/username_reg"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/txtview2_reg"
-            android:inputType="textAutoComplete"
-            android:maxLines="1"
-            android:singleLine="true"
-            android:textColor="@color/textColor"
-            android:textStyle="bold" />
+            <EditText
+                android:id="@+id/name_reg"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/txtview1_reg"
+                android:inputType="textAutoComplete"
+                android:maxLines="1"
+                android:singleLine="true"
+                android:textColor="@color/textColor"
+                android:textStyle="bold"
+                android:theme="@style/RedCheck" />
 
-        <TextView
-            android:id="@+id/txtview3_reg"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_below="@id/username_reg"
-            android:text="@string/prompt_password"
-            android:textColor="@color/textColor"
-            android:textSize="24sp"
-            android:fontFamily="sans-serif-condensed"
-            android:textStyle="bold" />
+            <TextView
+                android:id="@+id/email_text_view_reg"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_below="@id/name_reg"
+                android:fontFamily="sans-serif-condensed"
+                android:text="@string/emp_email"
+                android:textColor="@color/textColor"
+                android:textSize="24sp"
+                android:textStyle="bold" />
 
-        <EditText
-            android:id="@+id/password_reg"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/txtview3_reg"
-            android:inputType="textPassword"
-            android:maxLines="1"
-            android:singleLine="true"
-            android:textColor="@color/textColor"
-            android:textStyle="bold" />
+            <EditText
+                android:id="@+id/email_reg"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/email_text_view_reg"
+                android:inputType="textEmailAddress"
+                android:maxLines="1"
+                android:singleLine="true"
+                android:textColor="@color/textColor"
+                android:textStyle="bold"
+                android:theme="@style/RedCheck" />
 
-        <TextView
-            android:id="@+id/txtview4_reg"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_below="@id/password_reg"
-            android:text="@string/prompt_con_password"
-            android:textColor="@color/textColor"
-            android:textSize="24sp"
-            android:fontFamily="sans-serif-condensed"
-            android:textStyle="bold" />
-
-        <EditText
-            android:id="@+id/con_password_reg"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/txtview4_reg"
-            android:inputType="textPassword"
-            android:maxLines="1"
-            android:singleLine="true"
-            android:textColor="@color/textColor"
-            android:textStyle="bold" />
-
-        <Button
-            android:id="@+id/register_button"
-            style="?android:textAppearanceMedium"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/con_password_reg"
-            android:layout_marginTop="35dp"
-            android:background="@drawable/button_selector"
-            android:text="@string/register_button"
-            android:textColor="@color/textColor"
-            android:textStyle="bold" />
-
-    </RelativeLayout>
+            <TextView
+                android:id="@+id/txtview2_reg"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_below="@id/email_reg"
+                android:fontFamily="sans-serif-condensed"
+                android:text="@string/emp_username"
+                android:textColor="@color/textColor"
+                android:textSize="24sp"
+                android:textStyle="bold" />
 
 
-</LinearLayout>
+            <EditText
+                android:id="@+id/username_reg"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/txtview2_reg"
+                android:inputType="textAutoComplete"
+                android:maxLines="1"
+                android:singleLine="true"
+                android:textColor="@color/textColor"
+                android:textStyle="bold"
+                android:theme="@style/RedCheck" />
+
+            <TextView
+                android:id="@+id/txtview3_reg"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_below="@id/username_reg"
+                android:fontFamily="sans-serif-condensed"
+                android:text="@string/prompt_password"
+                android:textColor="@color/textColor"
+                android:textSize="24sp"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/password_reg"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/txtview3_reg"
+                android:inputType="textPassword"
+                android:maxLines="1"
+                android:singleLine="true"
+                android:textColor="@color/textColor"
+                android:textStyle="bold"
+                android:theme="@style/RedCheck" />
+
+            <TextView
+                android:id="@+id/txtview4_reg"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_below="@id/password_reg"
+                android:fontFamily="sans-serif-condensed"
+                android:text="@string/prompt_con_password"
+                android:textColor="@color/textColor"
+                android:textSize="24sp"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/con_password_reg"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/txtview4_reg"
+                android:inputType="textPassword"
+                android:maxLines="1"
+                android:singleLine="true"
+                android:textColor="@color/textColor"
+                android:textStyle="bold"
+                android:theme="@style/RedCheck" />
+
+            <Button
+                android:id="@+id/register_button"
+                style="?android:textAppearanceMedium"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/con_password_reg"
+                android:layout_marginTop="35dp"
+                android:background="@drawable/button_selector"
+                android:text="@string/register_button"
+                android:textColor="@color/textColor"
+                android:textStyle="bold" />
+
+        </RelativeLayout>
+
+
+    </LinearLayout>
+
+</ScrollView>
