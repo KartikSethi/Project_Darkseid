@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "443502013735",
+    "firebase_url": "https://projectdarkseid.firebaseio.com",
+    "project_id": "projectdarkseid",
+    "storage_bucket": "projectdarkseid.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:443502013735:android:48b725eb10928ac0",
+        "android_client_info": {
+          "package_name": "com.example.android.complaintcrmd"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "443502013735-r4da04lja16v951et7tee5fd5g4usnig.apps.googleusercontent.com",
+          "client_type": 3
+        },
+        {
+          "client_id": "443502013735-cket5ga9jnqfvgk1s7vrj2odjv5hj1tp.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB4DztBlGHYpEB5xnkOUe1xJKRz4dVhzYo"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
