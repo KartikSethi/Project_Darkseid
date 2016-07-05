@@ -60,6 +60,15 @@
             android:name=".Drawer_Activity_Station"
             android:label="@string/title_activity_drawer__activity__station"
             android:theme="@style/AppTheme" />
+        <activity
+            android:name=".RegisterActivity"
+            android:label="RegisterActivity"
+            android:theme="@style/AppTheme" />
+
+        <activity
+            android:name=".Main2Activity"
+            android:label="Main2Activity"
+            android:theme="@style/AppTheme" />
 
         <receiver
             android:name="com.google.android.gcm.GCMBroadcastReceiver"
@@ -77,7 +86,6 @@
 
         <service android:name=".GCMIntentService" />
 
-        <activity android:name=".Main2Activity"></activity>
     </application>
 
 </manifest>

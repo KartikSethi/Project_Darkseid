@@ -40,7 +40,7 @@ public class BackgroundTask extends AsyncTask<String, Void, String> {
     //String imei="";
     String form_retrieval_url = "http://2f1a2ffe.ngrok.io/ComplaintPortal/report/get_time_area_app";
     String form_submit_url = "http://2f1a2ffe.ngrok.io/ComplaintPortal/report/submit_report_app";
-    //    String register_url = "http://192.168.252.50/GPSAttendance/welcome/register";                        //"http://61.246.165.5/GPSAttendance/welcome/register"; // (name of the site) "http://192.168.X.X(ip of my comp or any other site)/directory name/php script
+    String register_url = "http://2f1a2ffe.ngrok.io/ComplaintPortal/home/register";                        //"http://61.246.165.5/GPSAttendance/welcome/register"; // (name of the site) "http://192.168.X.X(ip of my comp or any other site)/directory name/php script
     String login_url = "http://2f1a2ffe.ngrok.io/ComplaintPortal/home/login_app";//"http://61.246.165.5/GPSAttendance/welcome/login";
     //    String gps_url = "http://192.168.252.50/GPSAttendance/welcome/report";//"http://61.246.165.5/GPSAttendance/welcome/report";
     AlertDialog.Builder builder;  // to alert the user
@@ -124,61 +124,64 @@ public class BackgroundTask extends AsyncTask<String, Void, String> {
                 e.printStackTrace();
             }
 
-//        } else if (method.equals("gps")) { // if params[0] is equal to "login"
-//            /*
-//             *to send the username and password to the server and get the response from the server
-//             * if the response is positive we will transit to the home activity
-//             * otherwise we need to display an alertDialog
-//             */
-//            try {
-//                URL url = new URL(gps_url);
-//                HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
-//                httpURLConnection.setRequestMethod("POST");
-//                httpURLConnection.setDoOutput(true);
-//                httpURLConnection.setDoInput(true);
-//                OutputStream outputStream = httpURLConnection.getOutputStream();
-//                BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream, "UTF-8"));
-//                String imeigps, message, location;
-//                imeigps = params[1];
-//                message = params[2];
-//                location = params[3];
-//                String data = URLEncoder.encode("imei", "UTF-8") + "=" + URLEncoder.encode(imeigps, "UTF-8") + "&" +
-//                        URLEncoder.encode("Report", "UTF-8") + "=" + URLEncoder.encode(message, "UTF-8") + "&" +
-//                        URLEncoder.encode("location", "UTF-8") + "=" + URLEncoder.encode(location, "UTF-8");
-//
-//                bufferedWriter.write(data);
-//                bufferedWriter.flush();
-//                bufferedWriter.close();
-//                outputStream.close();
-//                //Log.v("Back",imeigps+message+location);
-//                // output stream has been used to send data to the server
-//                /*
-//                 * Now the response from the server will be in the form of json and we need to decode it
-//                 */
-//                InputStream inputStream = httpURLConnection.getInputStream();
-//                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
-//                StringBuilder stringBuilder = new StringBuilder();
-//                String line = "";  // just a variable to read data from each line
-//                while ((line = bufferedReader.readLine()) != null) {
-//                    stringBuilder.append(line + "\n");
-//                }
-//                httpURLConnection.disconnect();
-//                try {
-//                    Thread.sleep(500); // to give a pause for the "connecting to  the server" effect
-//                } catch (InterruptedException e) {
-//                    e.printStackTrace();
-//                }
-//                return stringBuilder.toString().trim();
-//            } catch (MalformedURLException e) {
-//                Log.v("mal","HEre");
-//                e.printStackTrace();
-//            } catch (ProtocolException e) {
-//                Log.v("protocol","HEre");
-//                e.printStackTrace();
-//            } catch (IOException e) {
-//                Log.v("IO","HEre");
-//                e.printStackTrace();
-//            }
+
+        } else if (method.equals("register")) { // if params[0] is equal to "login"
+            /*
+             *to send the username and password to the server and get the response from the server
+             * if the response is positive we will transit to the home activity
+             * otherwise we need to display an alertDialog
+             */
+
+            try {
+                URL url = new URL(register_url);
+                HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
+                httpURLConnection.setRequestMethod("POST");
+                httpURLConnection.setDoOutput(true);
+                httpURLConnection.setDoInput(true);
+                OutputStream outputStream = httpURLConnection.getOutputStream();
+                BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream, "UTF-8"));
+                String name, email, userid, pass, type;
+                Log.v("checking:", "before sending");
+                String data = URLEncoder.encode("userid", "UTF-8") + "=" + URLEncoder.encode(params[3], "UTF-8") + "&" +
+                        URLEncoder.encode("name", "UTF-8") + "=" + URLEncoder.encode(params[1], "UTF-8") + "&" +
+                        URLEncoder.encode("usertype", "UTF-8") + "=" + URLEncoder.encode(params[5], "UTF-8") + "&" +
+                        URLEncoder.encode("password", "UTF-8") + "=" + URLEncoder.encode(params[4], "UTF-8") + "&" +
+                        URLEncoder.encode("email", "UTF-8") + "=" + URLEncoder.encode(params[2], "UTF-8");
+//                        URLEncoder.encode("imei", "UTF-8") + "=" + URLEncoder.encode(params[3], "UTF-8");
+                bufferedWriter.write(data);
+                bufferedWriter.flush();
+                bufferedWriter.close();
+                outputStream.close();   // output stream has been used to send data to the server
+                Log.v("checking:", "after writing");
+                /*
+                 * Now the response from the server will be in the form of json and we need to decode it
+                 */
+                InputStream inputStream = httpURLConnection.getInputStream();
+                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
+                StringBuilder stringBuilder = new StringBuilder();
+                String line = "";  // just a variable to read data from each line
+                while ((line = bufferedReader.readLine()) != null) {
+                    stringBuilder.append(line + "\n");
+                }
+                httpURLConnection.disconnect();
+                try {
+                    Thread.sleep(500); // to give a pause for the "connecting to  the server" effect
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                Log.v("checking:", "before retrieving message");
+                return stringBuilder.toString().trim();
+            } catch (MalformedURLException e) {
+                Log.v("checking:", ",mal u");
+                e.printStackTrace();
+            } catch (ProtocolException e) {
+                Log.v("checking:", "proto");
+                e.printStackTrace();
+            } catch (IOException e) {
+                Log.v("checking:", "io");
+                e.printStackTrace();
+            }
+
 
         } else if (method.equals("form_retrieval")) {
 
@@ -240,9 +243,9 @@ public class BackgroundTask extends AsyncTask<String, Void, String> {
                 subfault = params[2];
                 comments = params[3];
                 String data = URLEncoder.encode("userid", "UTF-8") + "=" + URLEncoder.encode(userid, "UTF-8") + "&" +
-                        URLEncoder.encode("faulttype", "UTF-8") + "=" + URLEncoder.encode(faulttype, "UTF-8") + "&" +
+                        URLEncoder.encode("comment", "UTF-8") + "=" + URLEncoder.encode(comments, "UTF-8") + "&" +
                         URLEncoder.encode("subfault", "UTF-8") + "=" + URLEncoder.encode(subfault, "UTF-8") + "&" +
-                        URLEncoder.encode("commment", "UTF-8") + "=" + URLEncoder.encode(comments, "UTF-8");
+                        URLEncoder.encode("faulttype", "UTF-8") + "=" + URLEncoder.encode(faulttype, "UTF-8");
 //
                 bufferedWriter.write(data);
                 bufferedWriter.flush();
@@ -361,6 +364,7 @@ public class BackgroundTask extends AsyncTask<String, Void, String> {
                     FormActivity.timeFill.setText(time);
                     FormActivity.dateFill.setText(date);
                 } else if (code.equals("submit_report_true")) {
+                    Log.v("CODE", code);
                     progressDialog.dismiss();
                     String message = JO.getString("message");
                     showDialog("Complaint Reported", message, code);
@@ -393,6 +397,16 @@ public class BackgroundTask extends AsyncTask<String, Void, String> {
                 }
             });
 
+        } else if (code.equals("reg_false")) {
+            // if loginn fails then we need to empty the username and password fields
+            builder.setMessage(message);
+            builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    dialogInterface.dismiss();
+                    activity.finish();
+                }
+            });
         } else if (code.equals("login_false")) {
             // if loginn fails then we need to empty the username and password fields
             builder.setMessage(message);

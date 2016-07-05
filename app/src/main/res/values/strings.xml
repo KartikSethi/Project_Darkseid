@@ -172,5 +172,14 @@
     <string name="options_clear">Clear</string>
     <string name="options_exit">Exit</string>
     <string name="emp_email">Email</string>
+    <string name="user_type">User Type:</string>
+
+    <string name="user_prompt">Choose a user type</string>
+
+
+    <string-array name="user_arrays">
+        <item>Report</item>
+        <item>Repair</item>
+    </string-array>
 
 </resources>

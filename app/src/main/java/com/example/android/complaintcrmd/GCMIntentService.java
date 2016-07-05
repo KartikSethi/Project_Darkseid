@@ -36,7 +36,7 @@ public class GCMIntentService extends GCMBaseIntentService {
     protected void onRegistered(Context context, String registrationId) {
         Log.i(TAG, "Device registered: regId = " + registrationId);
         displayMessage(context, "Your device registered with GCM");
-        ServerUtilities.register(context, RegisterActivity.name_fin, RegisterActivity.email_fin, registrationId);
+        ServerUtilities.register(context, RegisterActivity.userid_fin, registrationId);
     }
 
     /**
@@ -128,7 +128,8 @@ public class GCMIntentService extends GCMBaseIntentService {
                 (NotificationCompat.Builder) new NotificationCompat.Builder(this)
                         .setSmallIcon(icon)
                         .setContentTitle("My notification")
-                        .setContentText("Hello World!");
+                        .setContentText("Hello World!")
+                        .setTicker("Complaint Received");
 
         Uri alarmSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         mBuilder.setSound(alarmSound);

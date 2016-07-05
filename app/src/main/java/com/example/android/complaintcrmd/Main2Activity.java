@@ -32,12 +32,12 @@ public class Main2Activity extends Activity {
 
     public static String name;
     public static String email;
+    public static String id;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-
+        setContentView(R.layout.activity_main2);
         cd = new ConnectionDetector(getApplicationContext());
 
         // Check if Internet present
@@ -53,9 +53,7 @@ public class Main2Activity extends Activity {
         // Getting name, email from intent
         Intent i = getIntent();
 
-        name = i.getStringExtra("name");
-        email = i.getStringExtra("email");
-
+        id = RegisterActivity.userid_fin;
         // Make sure the device has the proper dependencies.
         GCMRegistrar.checkDevice(this);
 
@@ -80,6 +78,25 @@ public class Main2Activity extends Activity {
             if (GCMRegistrar.isRegisteredOnServer(this)) {
                 // Skips registration.
                 Toast.makeText(getApplicationContext(), "Already registered with GCM", Toast.LENGTH_LONG).show();
+                final Context context = this;
+                mRegisterTask = new AsyncTask<Void, Void, Void>() {
+
+                    @Override
+                    protected Void doInBackground(Void... params) {
+                        // Register on our server
+                        // On server creates a new user
+                        ServerUtilities.unregister(context, regId);
+                        return null;
+                    }
+
+                    @Override
+                    protected void onPostExecute(Void result) {
+                        mRegisterTask = null;
+                    }
+
+                };
+                mRegisterTask.execute(null, null, null);
+//                ServerUtilities.unregister(context,regId);
             } else {
                 // Try to register again, but not in the UI thread.
                 // It's also necessary to cancel the thread onDestroy(),
@@ -91,7 +108,7 @@ public class Main2Activity extends Activity {
                     protected Void doInBackground(Void... params) {
                         // Register on our server
                         // On server creates a new user
-                        ServerUtilities.register(context, name, email, regId);
+                        ServerUtilities.register(context, regId, id);
                         return null;
                     }
 

@@ -33,13 +33,12 @@ public final class ServerUtilities {
     /**
      * Register this account/device pair within the server.
      */
-    static void register(final Context context, String name, String email, final String regId) {
+    static void register(final Context context, final String regId, String userid) {
         Log.i(TAG, "registering device (regId = " + regId + ")");
         String serverUrl = SERVER_URL;
         Map<String, String> params = new HashMap<String, String>();
         params.put("regId", regId);
-        params.put("name", name);
-        params.put("email", email);
+        params.put("userid", userid);
 
         long backoff = BACKOFF_MILLI_SECONDS + random.nextInt(1000);
         // Once GCM returns a registration id, we need to register on our server
@@ -86,7 +85,7 @@ public final class ServerUtilities {
      */
     static void unregister(final Context context, final String regId) {
         Log.i(TAG, "unregistering device (regId = " + regId + ")");
-        String serverUrl = SERVER_URL + "/unregister";
+        String serverUrl = "http://2f1a2ffe.ngrok.io/ComplaintPortal/home/unregister";
         Map<String, String> params = new HashMap<String, String>();
         params.put("regId", regId);
         try {

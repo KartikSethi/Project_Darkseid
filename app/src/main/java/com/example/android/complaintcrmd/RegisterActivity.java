@@ -7,20 +7,29 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static com.example.android.complaintcrmd.CommonUtilities.SENDER_ID;
 import static com.example.android.complaintcrmd.CommonUtilities.SERVER_URL;
 
-public class RegisterActivity extends AppCompatActivity {
+public class RegisterActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
     private EditText Username, Pass, ConPass, Name, Email;
-    protected static String name_fin, email_fin;
+    private String type;
+    protected static String name_fin, email_fin, userid_fin;
     private Button reg_button;
     private AlertDialog.Builder builder;
     AlertDialogManager alert = new AlertDialogManager();
     ConnectionDetector cd;
+    private String[] arraySpinner1;
+    Spinner spinner;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +43,35 @@ public class RegisterActivity extends AppCompatActivity {
         reg_button = (Button) findViewById(R.id.register_button);
 
         cd = new ConnectionDetector(getApplicationContext());
+//        InstanceID.deleteToken()
+        this.arraySpinner1 = new String[]{
+                "Repair", "Report"
+        };
+
+        spinner = (Spinner) findViewById(R.id.spin);
+
+
+        // Spinner click listener
+        spinner.setOnItemSelectedListener(this);
+
+        // Spinner Drop down elements
+        List<String> categories = new ArrayList<String>();
+        categories.add("Report");
+        categories.add("Repair");
+
+        // Creating adapter for spinner
+        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, categories);
+
+        // Drop down layout style - list view with radio button
+        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        // attaching data adapter to spinner
+        spinner.setAdapter(dataAdapter);
+//
+//        ArrayAdapter<String> adapter_spinner1 = new ArrayAdapter<String>(this,
+//                android.R.layout.simple_spinner_item, arraySpinner1);
+//        spinner1.setAdapter(adapter_spinner1);
+//        spinner1.setOnItemSelectedListener(this);
 
         // Check if Internet present
         if (!cd.isConnectingToInternet()) {
@@ -116,7 +154,8 @@ public class RegisterActivity extends AppCompatActivity {
                      */
                     name_fin = Name.getText().toString();
                     email_fin = Email.getText().toString();
-                    backgroundTask.execute("register", Name.getText().toString(), Email.getText().toString(), Username.getText().toString(), Pass.getText().toString());
+                    userid_fin = Username.getText().toString();
+                    backgroundTask.execute("register", Name.getText().toString(), Email.getText().toString(), Username.getText().toString(), Pass.getText().toString(), type);
                     /*
                      * here register is arg[0], Name.getText().toString() is arg[1] and so on.
                      */
@@ -132,4 +171,13 @@ public class RegisterActivity extends AppCompatActivity {
         return !TextUtils.isEmpty(target) && android.util.Patterns.EMAIL_ADDRESS.matcher(target).matches();
     }
 
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        type = spinner.getItemAtPosition(position).toString();
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+        type = "none";
+    }
 }

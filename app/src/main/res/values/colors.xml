@@ -10,4 +10,5 @@
     <color name="pressed">#ffff0000</color>
     <color name="focussed">#ff0000ff</color>
     <color name="default_color">#ff000000</color>
+    <color name="grey_color">#e0e0e0</color>
 </resources>

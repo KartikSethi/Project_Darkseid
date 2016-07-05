@@ -152,17 +152,40 @@
                 android:textStyle="bold"
                 android:theme="@style/RedCheck" />
 
+            <TextView
+                android:id="@+id/user_type"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_below="@id/con_password_reg"
+                android:fontFamily="sans-serif-condensed"
+                android:text="@string/user_type"
+                android:textColor="@color/textColor"
+                android:textSize="24sp"
+                android:textStyle="bold" />
+
+            <Spinner
+                android:id="@+id/spin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#000000"
+                android:textSize="12sp"
+                android:prompt="@string/user_prompt"
+                android:layout_below="@+id/con_password_reg"
+                android:layout_toRightOf="@+id/user_type" />
+
             <Button
                 android:id="@+id/register_button"
                 style="?android:textAppearanceMedium"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/con_password_reg"
+                android:layout_below="@id/spin"
                 android:layout_marginTop="35dp"
                 android:background="@drawable/button_selector"
                 android:text="@string/register_button"
                 android:textColor="@color/textColor"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:layout_marginBottom="16dp" />
 
         </RelativeLayout>
 
