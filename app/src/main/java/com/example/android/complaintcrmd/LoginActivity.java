@@ -243,13 +243,15 @@ public class LoginActivity extends AppCompatActivity {
 
             if (saveLoginCheckBox.isChecked()) {
                 loginPrefsEditor.putBoolean("saveLogin", true);
-                loginPrefsEditor.putString("username", username);
-                loginPrefsEditor.putString("password", password);
-                loginPrefsEditor.commit();
+
+
             } else {
                 loginPrefsEditor.clear();
-                loginPrefsEditor.commit();
+
             }
+            loginPrefsEditor.putString("username", username);
+            loginPrefsEditor.putString("password", password);
+            loginPrefsEditor.commit();
 //            Intent i = new Intent(LoginActivity.this, FormActivity.class);
 //            startActivity(i);
             userid = Username.getText().toString();

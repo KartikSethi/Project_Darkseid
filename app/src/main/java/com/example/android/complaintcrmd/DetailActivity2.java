@@ -6,6 +6,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.TextView;
 
+import com.example.android.complaintcrmd.data.DBHelper;
+
 public class DetailActivity2 extends AppCompatActivity {
 
     @Override
@@ -25,7 +27,7 @@ public class DetailActivity2 extends AppCompatActivity {
         db = new DBHelper(this);
         Intent intent = this.getIntent();
         int position=intent.getIntExtra("position",0);
+        db.insertCompleted(intent.getStringExtra("details"),"abc");
         db.deletePending(position);
-
     }
 }

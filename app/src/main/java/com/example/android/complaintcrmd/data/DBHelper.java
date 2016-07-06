@@ -19,8 +19,8 @@ public class DBHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
 
-        final String TABLE1=" CREATE TABLE "+ DataContract.Pending.TABLE_NAME+" ( " + DataContract.Pending.JSON+" TEXT NOT NULL )";
-        final String TABLE2=" CREATE TABLE "+ DataContract.Completed.TABLE_NAME+" ( "+ DataContract.Completed.JSON+" TEXT NOT NULL ,"+ DataContract.Completed.REPORT+" TEXT NOT NULL )";
+        final String TABLE1=" CREATE TABLE IF NOT EXISTS "+ DataContract.Pending.TABLE_NAME+" ( " + DataContract.Pending.JSON+" TEXT NOT NULL )";
+        final String TABLE2=" CREATE TABLE IF NOT EXISTS "+ DataContract.Completed.TABLE_NAME+" ( "+ DataContract.Completed.JSON+" TEXT NOT NULL ,"+ DataContract.Completed.REPORT+" TEXT NOT NULL )";
         sqLiteDatabase.execSQL(TABLE1);
         sqLiteDatabase.execSQL(TABLE2);
 
@@ -37,6 +37,7 @@ public class DBHelper extends SQLiteOpenHelper {
         SQLiteDatabase db =this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(DataContract.Pending.JSON, json);
+
         db.insert(DataContract.Pending.TABLE_NAME, null, contentValues);
         return true;
 
@@ -46,6 +47,26 @@ public class DBHelper extends SQLiteOpenHelper {
         Cursor res =  db.rawQuery( " select * from pending ", null );
         return res;
     }
-
-
+    public void deletePending (int id)
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.execSQL("DELETE FROM "+ DataContract.Pending.TABLE_NAME +" WHERE json in (SELECT json FROM "+ DataContract.Pending.TABLE_NAME+" LIMIT 1 OFFSET "+id+" )" );
+    }
+    public void insertCompleted(String json,String abc){
+        SQLiteDatabase db =this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(DataContract.Completed.JSON, json);
+        contentValues.put(DataContract.Completed.REPORT,abc);
+        db.insert(DataContract.Completed.TABLE_NAME,null,contentValues);
+    }
+    public Cursor getListCompleted(){
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor res =  db.rawQuery( " select * from "+ DataContract.Completed.TABLE_NAME, null );
+        return res;
+    }
+    public void deleteTablePending(){
+        SQLiteDatabase db =this.getWritableDatabase();
+        db.execSQL("DELETE FROM "+ DataContract.Pending.TABLE_NAME +" WHERE json in (SELECT json FROM "+ DataContract.Pending.TABLE_NAME+" )" );
+        //db.delete(DataContract.Pending.TABLE_NAME, null,null);
+    }
 }

@@ -12,7 +12,7 @@
         android:background="@color/colorPrimary"
         android:orientation="vertical"
 
-        tools:context="com.example.android.splash.LoginActivity">
+        tools:context="com.example.android.complaintcrmd.LoginActivity">
 
         <TextView
             android:layout_width="match_parent"

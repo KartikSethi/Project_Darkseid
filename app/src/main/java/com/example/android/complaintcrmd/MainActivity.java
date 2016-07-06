@@ -1,5 +1,6 @@
 package com.example.android.complaintcrmd;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentManager;
@@ -15,7 +16,8 @@ import android.widget.Toast;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    PendingFragment pendingFragment;
+    static PendingFragment pendingFragment;
+    static FragmentManager manager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,6 +25,7 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -32,6 +35,11 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        manager=getSupportFragmentManager();
+        fetchFormServer();
+        pendingFragment= new PendingFragment();
+        manager.beginTransaction().replace(R.id.FragmentHolder, pendingFragment).commit();
+
 
 
     }
@@ -53,7 +61,21 @@ public class MainActivity extends AppCompatActivity
         return true;
     }
 
-    @Override
+
+
+    public void fetchFormServer(){
+        ConnectionDetector cd=new ConnectionDetector(this);
+        if(cd.isConnectingToInternet()) {
+            BackgroundTask backgroundTask = new BackgroundTask(this);
+            SharedPreferences loginPreferences;
+            loginPreferences = getSharedPreferences("loginPrefs", MODE_PRIVATE);
+            String username = loginPreferences.getString("username", "");
+            backgroundTask.execute("fetch_pending", username);
+        }
+        else{
+            Toast.makeText(this, "No Internet Connection", Toast.LENGTH_SHORT).show();
+        }
+    }
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
@@ -80,12 +102,12 @@ public class MainActivity extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
-        FragmentManager manager=getSupportFragmentManager();
+
 
         if (id == R.id.pending_tasks) {
-
+            fetchFormServer();
             pendingFragment= new PendingFragment();
-           manager.beginTransaction().replace(R.id.FragmentHolder, pendingFragment).commit();
+            manager.beginTransaction().replace(R.id.FragmentHolder, pendingFragment).commit();
 
 
         }

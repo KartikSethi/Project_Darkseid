@@ -9,11 +9,14 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.AsyncTask;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import com.example.android.complaintcrmd.data.DBHelper;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -31,6 +34,8 @@ import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class BackgroundTask extends AsyncTask<String, Void, String> {
@@ -42,7 +47,9 @@ public class BackgroundTask extends AsyncTask<String, Void, String> {
     String form_submit_url = "http://2f1a2ffe.ngrok.io/ComplaintPortal/report/submit_report_app";
     String register_url = "http://2f1a2ffe.ngrok.io/ComplaintPortal/home/register";                        //"http://61.246.165.5/GPSAttendance/welcome/register"; // (name of the site) "http://192.168.X.X(ip of my comp or any other site)/directory name/php script
     String login_url = "http://2f1a2ffe.ngrok.io/ComplaintPortal/home/login_app";//"http://61.246.165.5/GPSAttendance/welcome/login";
-    //    String gps_url = "http://192.168.252.50/GPSAttendance/welcome/report";//"http://61.246.165.5/GPSAttendance/welcome/report";
+    String fetch_url="http://2f1a2ffe.ngrok.io/ComplaintPortal/Repair/app_get_report";
+    String send_url="https://56dd4dd6.ngrok.io/ComplaintPortal/Repair/submit_report_app";
+
     AlertDialog.Builder builder;  // to alert the user
     ProgressDialog progressDialog;  // to show the progress
 
@@ -276,6 +283,45 @@ public class BackgroundTask extends AsyncTask<String, Void, String> {
                 e.printStackTrace();
             }
         }
+        else if (method.equals("fetch_pending")) {
+
+            try {
+                URL url = new URL(fetch_url);
+                HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
+                httpURLConnection.setRequestMethod("POST");
+                httpURLConnection.setDoOutput(true);
+                httpURLConnection.setDoInput(true);
+                OutputStream outputStream = httpURLConnection.getOutputStream();
+                BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream, "UTF-8"));
+                String username;
+                username = params[1];
+                String data = URLEncoder.encode("userid", "UTF-8") + "=" + URLEncoder.encode(username, "UTF-8");
+                Log.v("fetch_pending",data);
+
+                bufferedWriter.write(data);
+                bufferedWriter.flush();
+                bufferedWriter.close();
+                outputStream.close();   // output stream has been used to send data to the server
+                /*
+                 * Now the response from the server will be in the form of json and we need to decode it
+                 */
+                InputStream inputStream = httpURLConnection.getInputStream();
+                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
+                StringBuilder stringBuilder = new StringBuilder();
+                String line = "";  // just a variable to read data from each line
+                while ((line = bufferedReader.readLine()) != null) {
+                    stringBuilder.append(line + "\n");
+                }
+                httpURLConnection.disconnect();
+                return stringBuilder.toString().trim();
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            } catch (ProtocolException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
         return null;
     }
 
@@ -378,10 +424,33 @@ public class BackgroundTask extends AsyncTask<String, Void, String> {
                     String message = JO.getString("message");
                     showDialog("Error in reporting", message, code);
                 }
+                else if(code.equals("complaint_list")){
+                    DBHelper db=new DBHelper(contx);
+                    db.insertPending(JO.getString("data"));
+
+                }
             } catch (JSONException e) {
                 e.printStackTrace();
             }
         }
+    }
+
+    public List<String> getTableRows(String s) {
+        List<String> result = new ArrayList<String>();
+        DBHelper db;
+        db = new DBHelper(this.contx);
+        Cursor cursor = db.getListPending();
+        //   cursor.moveToFirst();
+        try
+        {
+            while (cursor.moveToNext()) {
+                String columnValue = cursor.getString(0);
+                JSONObject jsonObject = new JSONObject(columnValue);
+
+                result.add(jsonObject.getString(s));
+            }}catch (Exception e){}
+        cursor.close();
+        return result;
     }
 
     /*
