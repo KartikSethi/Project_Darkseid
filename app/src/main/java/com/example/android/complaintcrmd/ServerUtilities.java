@@ -37,7 +37,7 @@ public final class ServerUtilities {
         Log.i(TAG, "registering device (regId = " + regId + ")");
         String serverUrl = SERVER_URL;
         Map<String, String> params = new HashMap<String, String>();
-        params.put("regId", regId);
+        params.put("gcm_regid", regId);
         params.put("userid", userid);
 
         long backoff = BACKOFF_MILLI_SECONDS + random.nextInt(1000);
@@ -87,7 +87,7 @@ public final class ServerUtilities {
         Log.i(TAG, "unregistering device (regId = " + regId + ")");
         String serverUrl = "http://2f1a2ffe.ngrok.io/ComplaintPortal/home/unregister";
         Map<String, String> params = new HashMap<String, String>();
-        params.put("regId", regId);
+        params.put("gcm_regid   ", regId);
         try {
             post(serverUrl, params);
             GCMRegistrar.setRegisteredOnServer(context, false);

@@ -142,12 +142,12 @@ public class BackgroundTask extends AsyncTask<String, Void, String> {
                 BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream, "UTF-8"));
                 String name, email, userid, pass, type;
                 Log.v("checking:", "before sending");
-                String data = URLEncoder.encode("userid", "UTF-8") + "=" + URLEncoder.encode(params[3], "UTF-8") + "&" +
-                        URLEncoder.encode("name", "UTF-8") + "=" + URLEncoder.encode(params[1], "UTF-8") + "&" +
-                        URLEncoder.encode("usertype", "UTF-8") + "=" + URLEncoder.encode(params[5], "UTF-8") + "&" +
+                String data = URLEncoder.encode("email", "UTF-8") + "=" + URLEncoder.encode(params[2], "UTF-8") + "&" +
+                        URLEncoder.encode("userid", "UTF-8") + "=" + URLEncoder.encode(params[3], "UTF-8") + "&" +
                         URLEncoder.encode("password", "UTF-8") + "=" + URLEncoder.encode(params[4], "UTF-8") + "&" +
-                        URLEncoder.encode("email", "UTF-8") + "=" + URLEncoder.encode(params[2], "UTF-8");
-//                        URLEncoder.encode("imei", "UTF-8") + "=" + URLEncoder.encode(params[3], "UTF-8");
+                        URLEncoder.encode("name", "UTF-8") + "=" + URLEncoder.encode(params[1], "UTF-8") + "&" +
+                        URLEncoder.encode("type", "UTF-8") + "=" + URLEncoder.encode(params[5], "UTF-8");
+
                 bufferedWriter.write(data);
                 bufferedWriter.flush();
                 bufferedWriter.close();
@@ -328,9 +328,14 @@ public class BackgroundTask extends AsyncTask<String, Void, String> {
                     progressDialog.dismiss();
                     String type = JO.getString("usertype");
                     Log.v("checkin:", type);
+                    if (type.equals("Repair")) {
+                        Intent intent = new Intent(activity, MainActivity.class);
+                        activity.startActivity(intent);
+                    } else {
+                        Intent intent = new Intent(activity, Drawer_Activity_Station.class);
+                        activity.startActivity(intent);
+                    }
 
-                    Intent intent = new Intent(activity, FormActivity.class);
-                    activity.startActivity(intent);
 //                    // to attach message to the intent from  the server
 //                    intent.putExtra("message", message);
 //                    activity.startActivity(intent);
@@ -467,6 +472,6 @@ public class BackgroundTask extends AsyncTask<String, Void, String> {
         AlertDialog alertDialog = builder.create();
         alertDialog.show();
     }
-    }
+}
 
 

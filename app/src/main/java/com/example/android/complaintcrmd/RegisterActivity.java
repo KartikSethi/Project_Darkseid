@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -155,6 +156,7 @@ public class RegisterActivity extends AppCompatActivity implements AdapterView.O
                     name_fin = Name.getText().toString();
                     email_fin = Email.getText().toString();
                     userid_fin = Username.getText().toString();
+                    Log.v("test", type);
                     backgroundTask.execute("register", Name.getText().toString(), Email.getText().toString(), Username.getText().toString(), Pass.getText().toString(), type);
                     /*
                      * here register is arg[0], Name.getText().toString() is arg[1] and so on.
@@ -173,7 +175,7 @@ public class RegisterActivity extends AppCompatActivity implements AdapterView.O
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        type = spinner.getItemAtPosition(position).toString();
+        type = spinner.getSelectedItem().toString();
     }
 
     @Override
